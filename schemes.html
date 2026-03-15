@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+        content="Government Schemes & Empowerment Opportunities for Women - OneStop Safe & Support">
+    <meta name="theme-color" content="#ff2a2a">
+    <title>Gov. Schemes | OneStop Safe & Support</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        :root {
+            --primary: #ff2e55;
+            --primary-glow: rgba(255, 46, 85, 0.4);
+            --primary-gradient: linear-gradient(135deg, #ff2e55, #ff6b35);
+            --bg-color: #0d111c;
+            --bg-secondary: #1a1e2d;
+            --text-main: #f8f9fa;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(26, 30, 45, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+            --border-radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            /* Category colors */
+            --cat-schemes: #a78bfa;
+            --cat-jobs: #34d399;
+            --cat-empower: #fb923c;
+            --cat-reference: #60a5fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .brand-name {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 46, 85, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 46, 85, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 16px 16px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .glass-header {
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            border-radius: 100px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 36px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 20px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 46, 85, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateX(-3px);
+        }
+
+        .header-info {
+            flex: 1;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .header-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(255, 46, 85, 0.12), rgba(255, 107, 53, 0.06));
+            border: 1px solid rgba(255, 46, 85, 0.2);
+            border-radius: var(--border-radius);
+            padding: 32px 28px;
+            margin-bottom: 36px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: heroReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes heroReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: block;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .hero-banner h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-banner p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        /* Search bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 12px 20px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+            animation: heroReveal 0.6s 0.1s both;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .search-bar ion-icon {
+            color: var(--text-muted);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        #search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        #search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Category filter chips */
+        .filter-chips {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+            margin-bottom: 28px;
+            animation: heroReveal 0.6s 0.2s both;
+        }
+
+        .filter-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .chip:hover,
+        .chip.active {
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        .chip[data-cat="all"].active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .chip[data-cat="Schemes & Welfare"].active {
+            background: rgba(167, 139, 250, 0.15);
+            border-color: var(--cat-schemes);
+            color: var(--cat-schemes);
+        }
+
+        .chip[data-cat="Jobs & Career Opportunities"].active {
+            background: rgba(52, 211, 153, 0.15);
+            border-color: var(--cat-jobs);
+            color: var(--cat-jobs);
+        }
+
+        .chip[data-cat="Empowerment & Entrepreneurship"].active {
+            background: rgba(251, 146, 60, 0.15);
+            border-color: var(--cat-empower);
+            color: var(--cat-empower);
+        }
+
+        .chip[data-cat="Reference & Policy"].active {
+            background: rgba(96, 165, 250, 0.15);
+            border-color: var(--cat-reference);
+            color: var(--cat-reference);
+        }
+
+        /* Category heading */
+        .category-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 32px 0 16px;
+            padding-left: 4px;
+        }
+
+        .category-heading .cat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Portal Cards */
+        .portals-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .portal-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: var(--border-radius);
+            padding: 22px 24px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            transition: var(--transition);
+            animation: cardReveal 0.5s ease both;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        @keyframes cardReveal {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .portal-card:hover {
+            transform: translateX(6px) translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .portal-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .portal-card-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .portal-card-body h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .portal-card-body p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .visit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .visit-link:hover {
+            gap: 10px;
+        }
+
+        .visit-link ion-icon {
+            font-size: 15px;
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            font-size: 15px;
+            display: none;
+        }
+
+        .no-results ion-icon {
+            font-size: 48px;
+            display: block;
+            margin: 0 auto 12px;
+            opacity: 0.4;
+        }
+
+        /* Count badge */
+        .count-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            background: rgba(255, 46, 85, 0.12);
+            color: var(--primary);
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="glass-header">
+            <a href="./index.html" class="back-btn" aria-label="Go back">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </a>
+            <div class="header-info">
+                <div class="brand-name">Gov. Schemes</div>
+                <div class="header-sub">Safety & Empowerment Portals</div>
+            </div>
+            <span class="count-badge" id="count-badge">7 Portals</span>
+        </header>
+
+        <!-- Hero -->
+        <div class="hero-banner">
+            <ion-icon name="shield-checkmark" class="hero-icon"></ion-icon>
+            <h1>Government Opportunities</h1>
+            <p>Official portals for schemes, jobs, and empowerment resources designed for women's safety and welfare.
+            </p>
+        </div>
+
+        <!-- Search -->
+        <div class="search-bar">
+            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" id="search-input" placeholder="Search portals or schemes..." autocomplete="off">
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-chips" id="filter-chips">
+            <button class="chip active" data-cat="all">🌐 All</button>
+            <button class="chip" data-cat="Schemes & Welfare">🎯 Schemes</button>
+            <button class="chip" data-cat="Jobs & Career Opportunities">💼 Jobs</button>
+            <button class="chip" data-cat="Empowerment & Entrepreneurship">🚀 Empowerment</button>
+            <button class="chip" data-cat="Reference & Policy">📋 Policy</button>
+        </div>
+
+        <!-- Portals List -->
+        <div id="portals-container" class="portals-grid"></div>
+        <div class="no-results" id="no-results">
+            <ion-icon name="search-outline"></ion-icon>
+            No portals found. Try a different search or filter.
+        </div>
+    </div>
+
+    <script>
+        const governmentPortals = [
+            {
+                name: "myScheme Portal",
+                url: "https://www.myscheme.gov.in/",
+                category: "Schemes & Welfare",
+                description: "The central government platform to find all schemes based on your eligibility (age, gender, state, education).",
+                icon: "library-outline"
+            },
+            {
+                name: "UMANG — New-age Governance",
+                url: "https://web.umang.gov.in/landing/",
+                category: "Schemes & Welfare",
+                description: "Single platform for national and state-level government services including women-centric programs.",
+                icon: "apps-outline"
+            },
+            {
+                name: "Women Entrepreneurship Platform",
+                url: "https://wep.gov.in/",
+                category: "Empowerment & Entrepreneurship",
+                description: "A NITI Aayog initiative offering mentorship, funding, incubation and knowledge for women entrepreneurs.",
+                icon: "rocket-outline"
+            },
+            {
+                name: "National Career Service (NCS)",
+                url: "https://www.ncs.gov.in/",
+                category: "Jobs & Career Opportunities",
+                description: "Official portal for job matching, career counseling, vocational guidance, and job fair information.",
+                icon: "briefcase-outline"
+            },
+            {
+                name: "Skill India Digital Hub",
+                url: "https://www.skillindiadigital.gov.in/internship",
+                category: "Jobs & Career Opportunities",
+                description: "Skill development courses, apprenticeships, and internship programs across multiple sectors.",
+                icon: "school-outline"
+            },
+            {
+                name: "Digital India Internship Portal",
+                url: "https://intern.meity.gov.in/",
+                category: "Jobs & Career Opportunities",
+                description: "Internships within the Ministry of Electronics and IT (MeitY) and related government organizations.",
+                icon: "laptop-outline"
+            },
+            {
+                name: "National Commission for Women",
+                url: "https://ncw.nic.in/",
+                category: "Reference & Policy",
+                description: "Official advisory body protecting and promoting the interests of women in India, including registering complaints.",
+                icon: "people-outline"
+            }
+        ];
+
+        const catColors = {
+            "Schemes & Welfare": { color: '#a78bfa', bg: 'rgba(167,139,250,0.12)' },
+            "Jobs & Career Opportunities": { color: '#34d399', bg: 'rgba(52,211,153,0.12)' },
+            "Empowerment & Entrepreneurship": { color: '#fb923c', bg: 'rgba(251,146,60,0.12)' },
+            "Reference & Policy": { color: '#60a5fa', bg: 'rgba(96,165,250,0.12)' }
+        };
+
+        let activeFilter = 'all';
+        let searchQuery = '';
+
+        function getFiltered() {
+            return governmentPortals.filter(p => {
+                const matchCat = activeFilter === 'all' || p.category === activeFilter;
+                const q = searchQuery.toLowerCase();
+                const matchSearch = !q || p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+                return matchCat && matchSearch;
+            });
+        }
+
+        function render() {
+            const container = document.getElementById('portals-container');
+            const noResults = document.getElementById('no-results');
+            const badge = document.getElementById('count-badge');
+            const filtered = getFiltered();
+
+            container.innerHTML = '';
+
+            if (filtered.length === 0) {
+                noResults.style.display = 'block';
+                badge.textContent = '0 Portals';
+                return;
+            }
+            noResults.style.display = 'none';
+            badge.textContent = `${filtered.length} Portal${filtered.length !== 1 ? 's' : ''}`;
+
+            // Group by category
+            const groups = {};
+            filtered.forEach(p => {
+                if (!groups[p.category]) groups[p.category] = [];
+                groups[p.category].push(p);
+            });
+
+            Object.entries(groups).forEach(([cat, portals], gi) => {
+                const col = catColors[cat] || { color: '#94a3b8', bg: 'rgba(148,163,184,0.1)' };
+
+                // Category heading
+                const heading = document.createElement('div');
+                heading.className = 'category-heading';
+                heading.style.color = col.color;
+                heading.style.animationDelay = `${gi * 0.08}s`;
+                heading.innerHTML = `<span class="cat-dot" style="background:${col.color}"></span>${cat}`;
+                container.appendChild(heading);
+
+                portals.forEach((portal, i) => {
+                    const card = document.createElement('a');
+                    card.className = 'portal-card';
+                    card.href = portal.url;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+                    card.style.animationDelay = `${(gi * portals.length + i) * 0.07}s`;
+                    card.innerHTML = `
+                        <div class="portal-card-icon" style="background:${col.bg}; color:${col.color}">
+                            <ion-icon name="${portal.icon}"></ion-icon>
+                        </div>
+                        <div class="portal-card-body">
+                            <h3>${portal.name}</h3>
+                            <p>${portal.description}</p>
+                            <span class="visit-link">
+                                Visit Portal <ion-icon name="arrow-forward-outline"></ion-icon>
+                            </span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+        }
+
+        // Filter chips
+        document.getElementById('filter-chips').addEventListener('click', e => {
+            const chip = e.target.closest('.chip');
+            if (!chip) return;
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            activeFilter = chip.dataset.cat;
+            render();
+        });
+
+        // Search
+        document.getElementById('search-input').addEventListener('input', e => {
+            searchQuery = e.target.value;
+            render();
+        });
+
+        render();
+    </script>
+</body>
+
+</html>

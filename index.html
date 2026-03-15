@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="OneStop - Premium Safe & Support Emergency Web App">
+    <meta name="theme-color" content="#ff2a2a">
+    <link rel="manifest" href="./manifest.json">
+    <title>OneStop | Safe & Support</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Modern Typography: Outfit for Headings, Inter for Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Ionicons for premium, dynamic iconography -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Interactive Glass Header -->
+        <header class="glass-header">
+            <div class="logo">
+                <img src="logo.jpg" alt="OneStop Logo" class="brand-logo">
+                <div>
+                    <h1>OneStop</h1>
+                    <span class="subtitle">Safe & Support</span>
+                </div>
+            </div>
+            <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+                <ion-icon name="moon-outline"></ion-icon>
+            </button>
+        </header>
+
+        <main>
+            <!-- Dynamic SOS Section -->
+            <section class="sos-hero">
+                <div class="glow-backdrop"></div>
+                <div class="sos-wrapper">
+                    <!-- SVG hold-progress ring -->
+                    <svg class="hold-ring" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="hold-ring-track" cx="100" cy="100" r="90" />
+                        <circle class="hold-ring-progress" id="hold-ring-progress" cx="100" cy="100" r="90" />
+                    </svg>
+                    <div class="ripple"></div>
+                    <div class="ripple delay-1"></div>
+                    <div class="ripple delay-2"></div>
+                    <button id="sos-btn" class="sos-btn" aria-label="Activate SOS" aria-pressed="false">
+                        <span class="sos-text">SOS</span>
+                        <ion-icon name="finger-print-outline" class="fingerprint-icon"></ion-icon>
+                    </button>
+                </div>
+                <p class="instruction">Hold to activate or shake device</p>
+
+                <!-- Intelligent Status Panel -->
+                <div id="status-panel" class="glass-panel status-panel hidden">
+                    <div id="verification-area">
+                        <div class="status-header">
+                            <ion-icon name="time-outline" class="timer-icon"></ion-icon>
+                            <h2>Verifying Emergency...</h2>
+                        </div>
+                        <div class="countdown-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" class="bg"></circle>
+                                <circle id="verification-progress" cx="50" cy="50" r="45" class="progress"></circle>
+                            </svg>
+                            <span id="countdown-number">10</span>
+                        </div>
+                        <p class="verification-subtext">Is this an actual emergency? Sending alert in 10 seconds.</p>
+                    </div>
+
+                    <div id="active-sos-area" class="hidden">
+                        <div class="status-header">
+                            <ion-icon name="warning" class="warning-icon"></ion-icon>
+                            <h2>Emergency Mode Active</h2>
+                        </div>
+                        <div class="location-status" id="location-status">
+                            <div class="spinner"></div>
+                            <span>Acquiring GPS coordinates...</span>
+                        </div>
+                    </div>
+
+                    <!-- Cancel Emergency Button -->
+                    <button id="cancel-sos-btn" class="cancel-btn" aria-label="Cancel Emergency">
+                        <ion-icon name="close-circle-outline" class="cancel-icon"></ion-icon>
+                        <span id="cancel-text">Cancel Emergency</span>
+                        <div class="cancel-btn-ripple"></div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Quick Contacts Grid -->
+            <section class="quick-contacts">
+                <h3 class="section-title">
+                    <ion-icon name="flash-outline"></ion-icon>
+                    Quick Actions
+                </h3>
+                <div class="contacts-grid">
+                    <a href="tel:112" class="glass-card contact-card">
+                        <div class="icon-wrapper bg-police">
+                            <ion-icon name="shield-checkmark"></ion-icon>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Police</h4>
+                            <span>112</span>
+                        </div>
+                    </a>
+                    <a href="tel:108" class="glass-card contact-card">
+                        <div class="icon-wrapper bg-medical">
+                            <ion-icon name="medical"></ion-icon>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Ambulance</h4>
+                            <span>108</span>
+                        </div>
+                    </a>
+                    <a href="tel:+" class="glass-card contact-card" id="family-contact">
+                        <div class="icon-wrapper bg-family">
+                            <ion-icon name="heart"></ion-icon>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Emergency</h4>
+                            <span>Contact</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Navigation & Safe Routes -->
+            <section class="facilities-section">
+                <h3 class="section-title">
+                    <ion-icon name="compass-outline"></ion-icon>
+                    Facilities & Routing
+                </h3>
+                <div class="action-grid">
+                    <button class="action-btn glass-btn" data-query="Hospitals near me">
+                        <ion-icon name="fitness-outline"></ion-icon>
+                        <span>Hospitals</span>
+                    </button>
+                    <button class="action-btn glass-btn" data-query="Police stations near me">
+                        <ion-icon name="business-outline"></ion-icon>
+                        <span>Police Hub</span>
+                    </button>
+                    <button class="action-btn glass-btn highlight" id="safe-route-btn">
+                        <ion-icon name="navigate"></ion-icon>
+                        <span>Safe Route</span>
+                    </button>
+                </div>
+
+                <div id="map-container" class="glass-panel map-container hidden">
+                    <iframe id="google-map" width="100%" height="100%" style="border:0;" allowfullscreen=""
+                        loading="lazy" title="Interactive Map"></iframe>
+                </div>
+            </section>
+
+            <!-- Government Schemes -->
+            <section class="schemes-section">
+                <a href="schemes.html" style="text-decoration: none; color: inherit; display: block;">
+                    <h3 class="section-title">
+                        <ion-icon name="shield-checkmark-outline"></ion-icon>
+                        Safety Initiatives & Government Schemes
+                        <ion-icon name="chevron-forward-outline"
+                            style="margin-left: auto; font-size: 18px; color: var(--text-muted);"></ion-icon>
+                    </h3>
+                    <div class="schemes-list">
+                        <div class="scheme-item glass-card">
+                            <div class="scheme-icon"><ion-icon name="library-outline"></ion-icon></div>
+                            <div class="scheme-content">
+                                <h4>Explore Government Portals</h4>
+                                <p>Tap here to browse all official government schemes, welfare portals, and empowerment
+                                    opportunities designed for your safety.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </section>
+        </main>
+    </div>
+
+    <!-- Tools & Utility Panels -->
+    <div id="utility-fab-group" class="utility-fab-group">
+        <button id="siren-btn" class="util-fab siren-fab" aria-label="Panic Siren">
+            <ion-icon name="volume-high"></ion-icon>
+        </button>
+        <button id="fake-call-btn" class="util-fab fakecall-fab" aria-label="Simulate Call">
+            <ion-icon name="call"></ion-icon>
+        </button>
+        <button id="chatbot-fab" class="util-fab chatbot-fab" aria-label="Open AI Assistant">
+            <ion-icon name="chatbubble-ellipses"></ion-icon>
+        </button>
+    </div>
+
+    <!-- AI Chatbot Panel -->
+    <div id="chatbot-panel" class="glass-panel chatbot-panel hidden">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <ion-icon name="chatbubbles-outline" class="bot-icon"></ion-icon>
+                AI Safety Assistant
+            </div>
+            <select id="chat-lang-select" class="lang-select">
+                <option value="en-US">English</option>
+                <option value="hi-IN">Hindi</option>
+                <option value="te-IN">Telugu</option>
+                <option value="ta-IN">Tamil</option>
+            </select>
+            <button id="close-chat" class="icon-btn" aria-label="Close Chat">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <!-- Messages go here -->
+        </div>
+        <div class="chat-prompts">
+            <button class="chat-prompt-btn" data-query="Can you help me?">Need Help</button>
+            <button class="chat-prompt-btn" data-query="Find police">Police Station</button>
+            <button class="chat-prompt-btn" data-query="Find hospital">Hospital</button>
+            <button class="chat-prompt-btn" data-query="I want to file a complaint">Report Issue</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type or speak...">
+            <button id="mic-btn" class="chat-tool-btn" aria-label="Voice Input">
+                <ion-icon name="mic-outline"></ion-icon>
+            </button>
+            <button id="send-btn" class="chat-tool-btn send" aria-label="Send Message">
+                <ion-icon name="send-outline"></ion-icon>
+            </button>
+        </div>
+    </div>
+
+    <!-- Fake Call UI Overlay -->
+    <div id="fake-call-overlay" class="fake-call-overlay hidden">
+        <div class="caller-profile">
+            <div class="caller-avatar">
+                <ion-icon name="person"></ion-icon>
+            </div>
+            <h3 id="caller-name">Home</h3>
+            <span id="call-status">Ringing...</span>
+        </div>
+        <div class="call-controls">
+            <button id="decline-call" class="call-btn decline"><ion-icon name="call"></ion-icon></button>
+            <button id="accept-call" class="call-btn accept"><ion-icon name="call"></ion-icon></button>
+            <button id="end-call" class="call-btn decline hidden"><ion-icon name="call"></ion-icon></button>
+        </div>
+    </div>
+
+    <!-- Notification Toast System -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
