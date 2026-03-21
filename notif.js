@@ -42,11 +42,18 @@ const NotificationManager = {
 
         this.notifBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            this.notifDropdown.classList.toggle('show');
+            if (this.notifDropdown.style.display === 'none' || this.notifDropdown.style.display === '') {
+                this.notifDropdown.style.display = 'block';
+                this.notifDropdown.classList.add('show');
+            } else {
+                this.notifDropdown.style.display = 'none';
+                this.notifDropdown.classList.remove('show');
+            }
             if (typeof triggerHaptic === 'function') triggerHaptic(20);
         });
 
         document.addEventListener('click', () => {
+             this.notifDropdown.style.display = 'none';
              this.notifDropdown.classList.remove('show');
         });
 
