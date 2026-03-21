@@ -314,7 +314,7 @@
             color: var(--cat-empower);
         }
 
-        .chip[data-cat="Reference & Policy"].active {
+        .chip[data-cat="Policy"].active {
             background: rgba(96, 165, 250, 0.15);
             border-color: var(--cat-reference);
             color: var(--cat-reference);
@@ -474,7 +474,26 @@
                 <div class="brand-name">Gov. Schemes</div>
                 <div class="header-sub">Safety & Empowerment Portals</div>
             </div>
-            <span class="count-badge" id="count-badge">7 Portals</span>
+
+            <div class="header-actions">
+                <div class="nav-links">
+                    <a href="https://www.ncw.gov.in/" target="_blank" class="nav-link">Reference</a>
+                    <a href="https://www.ncw.gov.in/" target="_blank" class="nav-link">Policy</a>
+                </div>
+
+                <!-- Notification System -->
+                <div class="notif-wrapper">
+                    <button id="notif-btn" class="icon-btn" aria-label="Notifications">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                        <span class="notif-badge" id="notif-count">0</span>
+                    </button>
+                    <div class="notif-dropdown" id="notif-dropdown">
+                        <!-- Dynamically populated via notif.js -->
+                    </div>
+                </div>
+
+                <span class="count-badge" id="count-badge">6 Portals</span>
+            </div>
         </header>
 
         <!-- Hero -->
@@ -497,7 +516,6 @@
             <button class="chip" data-cat="Schemes & Welfare">🎯 Schemes</button>
             <button class="chip" data-cat="Jobs & Career Opportunities">💼 Jobs</button>
             <button class="chip" data-cat="Empowerment & Entrepreneurship">🚀 Empowerment</button>
-            <button class="chip" data-cat="Reference & Policy">📋 Policy</button>
         </div>
 
         <!-- Portals List -->
@@ -506,6 +524,21 @@
             <ion-icon name="search-outline"></ion-icon>
             No portals found. Try a different search or filter.
         </div>
+
+        <!-- Premium Footer -->
+        <footer class="app-footer">
+            <div class="footer-links">
+                <a href="https://www.ncw.gov.in/" target="_blank" class="footer-link">
+                    <ion-icon name="library-outline"></ion-icon>
+                    Reference
+                </a>
+                <a href="https://www.ncw.gov.in/" target="_blank" class="footer-link">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    Policy
+                </a>
+            </div>
+            <p class="copyright">© 2026 OneStop Safe & Support | Information & Empowerment</p>
+        </footer>
     </div>
 
     <script>
@@ -551,13 +584,6 @@
                 category: "Jobs & Career Opportunities",
                 description: "Internships within the Ministry of Electronics and IT (MeitY) and related government organizations.",
                 icon: "laptop-outline"
-            },
-            {
-                name: "National Commission for Women",
-                url: "https://ncw.nic.in/",
-                category: "Reference & Policy",
-                description: "Official advisory body protecting and promoting the interests of women in India, including registering complaints.",
-                icon: "people-outline"
             }
         ];
 
@@ -565,7 +591,6 @@
             "Schemes & Welfare": { color: '#a78bfa', bg: 'rgba(167,139,250,0.12)' },
             "Jobs & Career Opportunities": { color: '#34d399', bg: 'rgba(52,211,153,0.12)' },
             "Empowerment & Entrepreneurship": { color: '#fb923c', bg: 'rgba(251,146,60,0.12)' },
-            "Reference & Policy": { color: '#60a5fa', bg: 'rgba(96,165,250,0.12)' }
         };
 
         let activeFilter = 'all';
@@ -654,8 +679,11 @@
             render();
         });
 
+        // Notification logic now in notif.js
+
         render();
     </script>
+    <script src="notif.js"></script>
 </body>
 
 </html>

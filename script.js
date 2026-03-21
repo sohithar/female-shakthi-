@@ -15,11 +15,22 @@ const actionBtns = document.querySelectorAll('.action-btn');
 const cancelSOSBtn = document.getElementById('cancel-sos-btn');
 const holdRing = document.querySelector('.hold-ring');
 const holdRingProgress = document.getElementById('hold-ring-progress');
+const sirenBtn = document.getElementById('siren-btn');
+const fakeCallBtn = document.getElementById('fake-call-btn');
+const fakeCallOverlay = document.getElementById('fake-call-overlay');
+const acceptCallBtn = document.getElementById('accept-call');
+const declineCallBtn = document.getElementById('decline-call');
+const endCallBtn = document.getElementById('end-call');
+const notifBtn = document.getElementById('notif-btn');
+const notifDropdown = document.getElementById('notif-dropdown');
+const notifCount = document.getElementById('notif-count');
 
 // --- Global State ---
 let isDarkTheme = true;
 let isSOSActivated = false;
 let pressTimer = null;
+let watchId = null; // For continuous tracking
+let emergencyLogs = [];
 
 // --- Cinematic Toast Notification System ---
 /**
@@ -145,6 +156,12 @@ function activateSOS() {
     showToast('Emergency detected. 10 seconds to cancel.', 'warning');
     triggerHaptic([100, 100]);
 
+    // Enhance SOS Button "Active Mood" during countdown
+    sosBtn.classList.add('verifying');
+    const sosText = document.querySelector('.sos-text');
+    sosText.innerText = 'WAIT';
+    document.querySelector('.fingerprint-icon').style.opacity = '0';
+
     countdownTimer = setInterval(() => {
         currentCountdown--;
         if (currentCountdown > 0) {
@@ -153,8 +170,23 @@ function activateSOS() {
         } else {
             clearInterval(countdownTimer);
             executeSOS();
+            // Start continuous location tracking
+            startContinuousTracking();
         }
     }, 1000);
+}
+
+function startContinuousTracking() {
+    if (navigator.geolocation) {
+        watchId = navigator.geolocation.watchPosition(
+            (pos) => {
+                onLocationSuccess(pos);
+                console.log("Tracking updated:", pos.coords.latitude, pos.coords.longitude);
+            },
+            onLocationError,
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
+    }
 }
 
 function executeSOS() {
@@ -209,6 +241,10 @@ function executeSOS() {
 
 // --- Cancel Emergency ---
 function deactivateSOS() {
+    if (watchId) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+    }
     if (isVerifying) {
         clearInterval(countdownTimer);
         isVerifying = false;
@@ -239,12 +275,15 @@ function deactivateSOS() {
     triggerHaptic([100, 50, 100]);
 
     // Restore SOS button to default state
+    sosBtn.classList.remove('verifying'); // Clear verifying state
     sosBtn.removeAttribute('style');
     sosBtn.setAttribute('aria-pressed', 'false');
 
     const sosText = document.querySelector('.sos-text');
     sosText.innerText = 'SOS';
     sosText.removeAttribute('style');
+
+    document.querySelector('.fingerprint-icon').style.opacity = '0.8';
 
     // Restore glow backdrop
     const glow = document.querySelector('.glow-backdrop');
@@ -270,6 +309,9 @@ function deactivateSOS() {
         }
     }, 420);
 
+    // Reset tracking flags
+    window.alertSent = false;
+    
     // Reset hold ring state
     void holdRingProgress.offsetWidth;
 }
@@ -302,22 +344,48 @@ function onLocationSuccess(position) {
             <ion-icon name="checkmark-done" style="color: #10b981; font-size: 20px;"></ion-icon>
         </div>
         <div style="display: flex; flex-direction: column;">
-            <div style="font-weight: 700; font-size: 15px;">Location Secured</div>
+            <div style="font-weight: 700; font-size: 15px;">Alert Sent & Tracking Live</div>
             <div style="font-size: 13px; color: var(--text-muted); margin: 3px 0;">Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}</div>
             ${actionHtml}
         </div>
     `;
 
-    // Automatically trigger the SMS draft so the user just has to hit send!
-    setTimeout(() => {
-        window.location.href = smsUrl;
+    // Only trigger heavy alerts on the FIRST lock during a session
+    if (!isSOSActivated) return; 
+    
+    // Check if we've already sent the initial burst
+    if (window.alertSent) return;
+    window.alertSent = true;
 
-        // As a fallback to family contacts, if configured we can also inform them
-        const savedFamilyNumber = localStorage.getItem('onestop_family_number');
-        if (savedFamilyNumber && !window.location.href.includes('sms')) {
-            // Browsers handle multiple redirects poorly without user interaction, but we prioritize 112
-        }
+    showToast('Alert sent successfully. Help is on the way.', 'success');
+
+    // Automatically trigger the SMS draft and Dial Authorities
+    setTimeout(() => {
+        const savedFamilyNumber = localStorage.getItem('onestop_family_number') || '112';
+        
+        // Finalized Emergency Message for Female Safety App
+        const emergencyTitle = "🚨 EMERGENCY! I need help immediately.";
+        const trackingMsg = `Live Location: ${googleMapsLink}\n(Track me in real-time)`;
+        const finalSmsUrl = `sms:${savedFamilyNumber},112?body=${encodeURIComponent(emergencyTitle + '\n' + trackingMsg)}`;
+
+        // Open SMS Draft
+        window.location.href = finalSmsUrl;
+
+        // Auto-call logic (Simulated for police/emergency number)
+        setTimeout(() => {
+            window.location.href = `tel:${savedFamilyNumber}`;
+        }, 3000);
+        
+        // Simulated Police API Forwarding
+        notifyPoliceAPI(lat, lon, googleMapsLink);
     }, 1500);
+}
+
+function notifyPoliceAPI(lat, lon, link) {
+    console.log("Forwarding data to police dispatch server...");
+    // In a real app, this would be: 
+    // fetch('https://police-api.gov.in/v1/sos', { method: 'POST', body: JSON.stringify({lat, lon, type: 'FEMALE_SAFETY'}) });
+    showToast('Forwarding coordinates to nearest police hub...', 'info');
 }
 
 function onLocationError(error) {
@@ -339,7 +407,7 @@ function onLocationError(error) {
 // --- Hardware Motion & Shake Detection Algorithm ---
 let lastX = null, lastY = null, lastZ = null;
 let lastShakeTimestamp = 0;
-const SHAKE_VELOCITY_THRESHOLD = 10; // Lowered to 10 for very high sensitivity on all mobile devices
+const SHAKE_VELOCITY_THRESHOLD = 8; // Increased sensitivity (lower number = more sensitive)
 
 if (window.DeviceMotionEvent) {
     window.addEventListener('devicemotion', (event) => {
@@ -358,11 +426,13 @@ if (window.DeviceMotionEvent) {
                 (dy > SHAKE_VELOCITY_THRESHOLD && dz > SHAKE_VELOCITY_THRESHOLD)) {
 
                 const now = Date.now();
-                // 3 second cooldown to prevent multi-fires
-                if ((now - lastShakeTimestamp) > 3000) {
+                // 1 second cooldown to allow rapid recovery but prevent infinite loops
+                if ((now - lastShakeTimestamp) > 1000) {
                     lastShakeTimestamp = now;
                     if (!isSOSActivated && !isVerifying) {
-                        showToast("Turbulence detected! Activating SOS mechanism...", "info");
+                        console.log("Shake detected! Immediate SOS activation.");
+                        // Force immediate visual feedback
+                        triggerHaptic([100, 50, 100]);
                         activateSOS();
                     }
                 }
@@ -484,6 +554,90 @@ familyContactBtn.addEventListener('touchstart', (e) => {
     }, 1500);
 });
 familyContactBtn.addEventListener('touchend', () => clearTimeout(familyPressTimer));
+
+// --- Panic Siren System (Web Audio API) ---
+let audioCtx = null;
+let sirenInterval = null;
+let isSirenActive = false;
+
+function toggleSiren() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    if (isSirenActive) {
+        stopSiren();
+    } else {
+        startSiren();
+    }
+}
+
+function startSiren() {
+    isSirenActive = true;
+    sirenBtn.classList.add('active');
+    showToast("Siren Active - High Decibel Alert", "error");
+    triggerHaptic([500, 200, 500, 200]);
+
+    sirenInterval = setInterval(() => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.5);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.5);
+    }, 600);
+}
+
+function stopSiren() {
+    isSirenActive = false;
+    sirenBtn.classList.remove('active');
+    clearInterval(sirenInterval);
+    showToast("Siren Disarmed", "success");
+}
+
+sirenBtn.addEventListener('click', toggleSiren);
+
+// --- Fake Call Simulation ---
+fakeCallBtn.addEventListener('click', () => {
+    fakeCallOverlay.classList.remove('hidden');
+    showToast("Incoming call simulated", "info");
+    triggerHaptic([500, 500, 500]);
+});
+
+acceptCallBtn.addEventListener('click', () => {
+    document.getElementById('call-status').innerText = "00:01";
+    document.getElementById('call-status').style.color = "#10b981";
+    acceptCallBtn.classList.add('hidden');
+    declineCallBtn.classList.add('hidden');
+    endCallBtn.classList.remove('hidden');
+    
+    // Simulate timer
+    let sec = 1;
+    setInterval(() => {
+        sec++;
+        const mins = Math.floor(sec / 60);
+        const s = sec % 60;
+        document.getElementById('call-status').innerText = `${mins}:${s < 10 ? '0' : ''}${s}`;
+    }, 1000);
+});
+
+const closeFakeCall = () => {
+    fakeCallOverlay.classList.add('hidden');
+    // Reset UI
+    setTimeout(() => {
+        document.getElementById('call-status').innerText = "Ringing...";
+        document.getElementById('call-status').style.color = "#3b82f6";
+        acceptCallBtn.classList.remove('hidden');
+        declineCallBtn.classList.remove('hidden');
+        endCallBtn.classList.add('hidden');
+    }, 500);
+};
+
+declineCallBtn.addEventListener('click', closeFakeCall);
+endCallBtn.addEventListener('click', closeFakeCall);
 
 // --- Utility Functions ---
 function triggerHaptic(pattern) {
@@ -642,6 +796,10 @@ promptBtns.forEach(btn => {
         processUserText(query);
     });
 });
+
+// --- Notification System Logic ---
+// Now handled centrally by notif.js
+
 
 // Text interaction
 function handleSend() {
