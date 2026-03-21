@@ -146,16 +146,7 @@ const NotificationManager = {
         this.save();
         this.render();
         
-        if (typeof showToast !== 'undefined') {
-            showToast('New Scheme Update Available!', 'info');
-        } else if (document.getElementById('toast-container')) {
-            // minimal toast fallback
-            const toast = document.createElement('div');
-            toast.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--primary); color:white; padding:10px 20px; border-radius:30px; z-index:9999; font-size:13px; font-weight:bold; box-shadow:var(--glass-shadow);';
-            toast.innerText = 'New Scheme Update Available!';
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
+        // Removed popup toast per user request. Just using the red dot notification badge.
     }
 };
 
