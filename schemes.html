@@ -476,9 +476,8 @@
             </div>
 
             <div class="header-actions">
-                <div class="nav-links">
-                    <a href="https://www.ncw.gov.in/" target="_blank" class="nav-link">Reference</a>
-                    <a href="https://www.ncw.gov.in/" target="_blank" class="nav-link">Policy</a>
+                <div class="nav-links" style="display:none;">
+                    <!-- Removed separate policy links per request -->
                 </div>
 
                 <!-- Notification System -->
@@ -516,6 +515,7 @@
             <button class="chip" data-cat="Schemes & Welfare">🎯 Schemes</button>
             <button class="chip" data-cat="Jobs & Career Opportunities">💼 Jobs</button>
             <button class="chip" data-cat="Empowerment & Entrepreneurship">🚀 Empowerment</button>
+            <button class="chip" data-cat="Policy">📖 Policy</button>
         </div>
 
         <!-- Portals List -->
@@ -527,15 +527,8 @@
 
         <!-- Premium Footer -->
         <footer class="app-footer">
-            <div class="footer-links">
-                <a href="https://www.ncw.gov.in/" target="_blank" class="footer-link">
-                    <ion-icon name="library-outline"></ion-icon>
-                    Reference
-                </a>
-                <a href="https://www.ncw.gov.in/" target="_blank" class="footer-link">
-                    <ion-icon name="document-text-outline"></ion-icon>
-                    Policy
-                </a>
+            <div class="footer-links" style="display:none;">
+                <!-- Removed separate policy links per request -->
             </div>
             <p class="copyright">© 2026 OneStop Safe & Support | Information & Empowerment</p>
         </footer>
@@ -584,6 +577,20 @@
                 category: "Jobs & Career Opportunities",
                 description: "Internships within the Ministry of Electronics and IT (MeitY) and related government organizations.",
                 icon: "laptop-outline"
+            },
+            {
+                name: "National Commission Portal",
+                url: "https://www.ncw.gov.in/",
+                category: "Policy",
+                description: "Official statutory body policies, rights awareness, and legal assistance platforms.",
+                icon: "business-outline"
+            },
+            {
+                name: "Women Safety Schemes & Laws",
+                url: "https://www.ncw.gov.in/",
+                category: "Policy",
+                description: "Comprehensive reference to safety regulations, helpline contacts, and constitutional protections.",
+                icon: "shield-checkmark-outline"
             }
         ];
 
@@ -591,6 +598,7 @@
             "Schemes & Welfare": { color: '#a78bfa', bg: 'rgba(167,139,250,0.12)' },
             "Jobs & Career Opportunities": { color: '#34d399', bg: 'rgba(52,211,153,0.12)' },
             "Empowerment & Entrepreneurship": { color: '#fb923c', bg: 'rgba(251,146,60,0.12)' },
+            "Policy": { color: '#60a5fa', bg: 'rgba(96,165,250,0.12)' }
         };
 
         let activeFilter = 'all';
@@ -621,45 +629,27 @@
             noResults.style.display = 'none';
             badge.textContent = `${filtered.length} Portal${filtered.length !== 1 ? 's' : ''}`;
 
-            // Group by category
-            const groups = {};
-            filtered.forEach(p => {
-                if (!groups[p.category]) groups[p.category] = [];
-                groups[p.category].push(p);
-            });
-
-            Object.entries(groups).forEach(([cat, portals], gi) => {
-                const col = catColors[cat] || { color: '#94a3b8', bg: 'rgba(148,163,184,0.1)' };
-
-                // Category heading
-                const heading = document.createElement('div');
-                heading.className = 'category-heading';
-                heading.style.color = col.color;
-                heading.style.animationDelay = `${gi * 0.08}s`;
-                heading.innerHTML = `<span class="cat-dot" style="background:${col.color}"></span>${cat}`;
-                container.appendChild(heading);
-
-                portals.forEach((portal, i) => {
-                    const card = document.createElement('a');
-                    card.className = 'portal-card';
-                    card.href = portal.url;
-                    card.target = '_blank';
-                    card.rel = 'noopener noreferrer';
-                    card.style.animationDelay = `${(gi * portals.length + i) * 0.07}s`;
-                    card.innerHTML = `
-                        <div class="portal-card-icon" style="background:${col.bg}; color:${col.color}">
-                            <ion-icon name="${portal.icon}"></ion-icon>
-                        </div>
-                        <div class="portal-card-body">
-                            <h3>${portal.name}</h3>
-                            <p>${portal.description}</p>
-                            <span class="visit-link">
-                                Visit Portal <ion-icon name="arrow-forward-outline"></ion-icon>
-                            </span>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
+            filtered.forEach((portal, i) => {
+                const col = catColors[portal.category] || { color: '#94a3b8', bg: 'rgba(148,163,184,0.1)' };
+                const card = document.createElement('a');
+                card.className = 'portal-card';
+                card.href = portal.url;
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
+                card.style.animationDelay = `${i * 0.07}s`;
+                card.innerHTML = `
+                    <div class="portal-card-icon" style="background:${col.bg}; color:${col.color}">
+                        <ion-icon name="${portal.icon}"></ion-icon>
+                    </div>
+                    <div class="portal-card-body">
+                        <h3>${portal.name}</h3>
+                        <p>${portal.description}</p>
+                        <span class="visit-link">
+                            Visit Portal <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </span>
+                    </div>
+                `;
+                container.appendChild(card);
             });
         }
 
