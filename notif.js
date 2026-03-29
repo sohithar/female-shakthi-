@@ -32,10 +32,9 @@ const NotificationManager = {
         } else {
             // Initial Seed Data
             this.data = [
-                { id: 1, title: 'Beti Bachao Beti Padhao – New Guidelines', desc: 'Updated guidelines for the BBBP scheme are now live on the NCW portal.', time: 'Just now', read: false, url: 'https://www.ncw.gov.in/', type: 'SCHEME' },
-                { id: 2, title: 'One Stop Centre (Sakhi) Expansion', desc: 'New support centers have been opened across 10 more districts. Learn more.', time: '2 hours ago', read: false, url: 'https://www.ncw.gov.in/', type: 'SCHEME' },
-                { id: 3, title: 'Mahila Shakti Kendra - Skill Program', desc: 'Enrollment for rural women leadership program starts today.', time: 'Yesterday', read: true, url: 'https://www.ncw.gov.in/', type: 'SCHEME' },
-                { id: 4, title: 'Important: NCW Safety Advisory', desc: 'New safety protocols for public spaces have been issued by the Commission.', time: '2 days ago', read: true, url: 'https://www.ncw.gov.in/', type: 'POLICY' }
+                { id: 1, title: 'Official Scheme Update – Portal', desc: 'New welfare initiatives now available via the National Government Portal.', time: 'Just now', read: false, url: 'https://www.ncw.gov.in/', type: 'SCHEME' },
+                { id: 2, title: 'Safety Policy Updated', desc: 'Read the latest protection policies on the official government portal.', time: '2 hours ago', read: false, url: 'https://www.ncw.gov.in/', type: 'POLICY' },
+                { id: 3, title: 'New Internship Openings', desc: 'Check the Digital India Internship portal for latest opportunities.', time: 'Yesterday', read: true, url: 'https://dii.nic.in/', type: 'SCHEME' }
             ];
             this.save();
         }

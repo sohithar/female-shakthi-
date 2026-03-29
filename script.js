@@ -24,8 +24,7 @@ const endCallBtn = document.getElementById('end-call');
 const notifBtn = document.getElementById('notif-btn');
 const notifDropdown = document.getElementById('notif-dropdown');
 const notifCount = document.getElementById('notif-count');
-const refPolicyBtn = document.getElementById('ref-policy-btn');
-const refPolicyDropdown = document.getElementById('ref-policy-dropdown');
+
 
 // --- Global State ---
 let isDarkTheme = true;
@@ -112,20 +111,7 @@ sosBtn.addEventListener('mouseleave', cancelPress);
 sosBtn.addEventListener('touchend', cancelPress);
 sosBtn.addEventListener('touchcancel', cancelPress);
 
-// --- Reference & Policy Dropdown ---
-if (refPolicyBtn && refPolicyDropdown) {
-    refPolicyBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        refPolicyDropdown.classList.toggle('show');
-        triggerHaptic(20);
-    });
 
-    document.addEventListener('click', () => {
-        refPolicyDropdown.classList.remove('show');
-    });
-
-    refPolicyDropdown.addEventListener('click', (e) => e.stopPropagation());
-}
 
 // --- Core Verification Layer ---
 let countdownTimer = null;
