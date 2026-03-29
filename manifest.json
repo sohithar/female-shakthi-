@@ -1,0 +1,25 @@
+{
+  "name": "OneStop Emergency",
+  "short_name": "OneStop",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d111c",
+  "theme_color": "#ff2a2a",
+  "description": "Premium Safe & Support Emergency Web App",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/9338/9338600.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/9338/9338600.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
